@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>رسالتي</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Fonts: Arabic handwriting & Latin Victorian -->
+  <link href="https://fonts.googleapis.com/css2?family=Lateef:wght@400;600&family=Aref+Ruqaa:wght@400;700&family=Great+Vibes&family=Cormorant+Garamond:wght@600&family=Noto+Naskh+Arabic:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="sig-left"><!-- بدّل إلى sig-left لو تريد الختم يسار -->
+  <main class="stage" aria-label="رسالة تفاعلية">
+    <button class="envelope3d" id="envelope" aria-label="اضغط 3 مرات لفتح الظرف">
+      <span class="env env-back" aria-hidden="true"></span>
+      <span class="letter-slot" aria-hidden="true"></span>
+      <span class="env env-front" aria-hidden="true"></span>
+      <span class="env env-flap" aria-hidden="true"></span>
+      <span class="env-ribbon" aria-hidden="true"></span>
+      <span class="env-ornaments" aria-hidden="true"></span>
+      <span class="bow" id="bow" aria-hidden="true">
+        <span class="loop left"></span>
+        <span class="loop right"></span>
+        <span class="tail left"></span>
+        <span class="tail right"></span>
+        <span class="knot"></span>
+      </span>
+    </button>
+
+    <!-- Portrait letter -->
+    <section class="letter portrait" id="letter" aria-live="polite">
+      <div class="paper">
+        <div class="paper-inner">
+          <!-- Wax seal header (top decorative) -->
+          <div class="wax-seal header" id="waxSeal" aria-hidden="true">
+            <svg class="seal-svg" viewBox="0 0 100 100" aria-hidden="true">
+              <defs>
+                <filter id="bevel" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur in="SourceAlpha" stdDeviation="1.5" result="blur"/>
+                  <feSpecularLighting in="blur" surfaceScale="5" specularConstant=".9" specularExponent="20" lighting-color="#f5d97a" result="spec">
+                    <fePointLight x="-60" y="-40" z="150"/>
+                  </feSpecularLighting>
+                  <feComposite in="spec" in2="SourceAlpha" operator="in" result="specOut"/>
+                  <feComposite in="SourceGraphic" in2="specOut" operator="arithmetic" k1="0" k2="1" k3="1" k4="0"/>
+                </filter>
+              </defs>
+              <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,215,0,.6)" stroke-width="2"/>
+              <text id="monoText" x="50" y="58" text-anchor="middle" font-size="30" font-family="Cormorant Garamond, serif" fill="rgba(255,215,0,.92)" filter="url(#bevel)">Y</text>
+            </svg>
+          </div>
+
+          <!-- Writing area fills the page -->
+          <article class="message handwrite" id="message"
+                   aria-label="نص الرسالة"
+                   data-content="يا من سكنت الفؤاد، 
+أكتبُ إليكِ على مَهَلٍ كأن القلمَ ريشةُ طائرٍ تمرُّ فوقَ صفحةِ سماء. 
+كلُّ نبضةٍ تُنشد اسمكِ بالعربية — and sometimes in English — 
+to say that Love speaks in every language we share.
+أعدكِ بأن أبقى سندًا، ودفئًا في البرد، ونورًا حين تتعب الدروب.
+Let this letter be a keepsake of our moments; a gentle vow, written by a steady heart.
+بقلبٍ مُحبّ — إلى الأبد."></article>
+
+          <!-- caret -->
+          <span id="caret" class="caret" aria-hidden="true"></span>
+
+          <!-- Bottom signature + small seal (hidden until writing ends) -->
+          <div class="signature-block" id="signatureBlock" aria-hidden="true">
+            <div class="signature-name" id="signatureName">يونس كمال</div>
+            <div class="wax-seal small" id="finalSeal" aria-hidden="true">
+              <svg class="seal-svg" viewBox="0 0 100 100" aria-hidden="true">
+                <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,215,0,.55)" stroke-width="2"/>
+                <text id="monoTextSmall" x="50" y="58" text-anchor="middle" font-size="28" font-family="Cormorant Garamond, serif" fill="rgba(255,215,0,.9)">Y ♥ S</text>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="particles" id="particles" aria-hidden="true"></div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

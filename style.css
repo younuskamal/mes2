@@ -1,0 +1,175 @@
+:root{
+  --navy:#0a2a43; --navy-deep:#061a2b; --royal:#154a74; --mid:#0f3d63;
+  --gold:#d4af37; --paper:#f7edd4; --ink:#0b1320;
+  --envW: min(76vw, 420px); --envH: calc(var(--envW) * 0.66);
+  --speed: .70;
+   --sealH: clamp(54px, 7.6vw, 72px); /* ارتفاع الختم العلوي */
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; color:var(--ink);
+  font-family:"Noto Naskh Arabic","Cormorant Garamond",serif;
+  background:
+    radial-gradient(1200px 800px at 50% -15%, #15324f 0%, #0b2136 45%, #071423 100%),
+    url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'>\
+<defs><pattern id='dam' width='220' height='220' patternUnits='userSpaceOnUse'>\
+<g fill='%230f2d4a' opacity='.22'>\
+<path d='M110 26c14 18 32 18 46 30s14 30 0 42-32 12-46 30-32 18-46 6-14-30 0-42 32-12 46-30z'/>\
+<circle cx='55' cy='55' r='8'/>\
+<circle cx='165' cy='165' r='8'/>\
+<path d='M26 165c12-6 24-6 36 6-12 12-24 12-36 6zM194 55c-12 6-24 6-36-6 12-12 24-12 36-6z'/>\
+</g></pattern></defs>\
+<rect width='100%' height='100%' fill='url(%23dam)'/></svg>");
+  background-size: cover, 360px; background-attachment: fixed; overflow:hidden;
+}
+
+.stage{ width:100%; height:100%; display:grid; place-items:center; perspective:1600px; position:relative; padding: clamp(8px, 3vw, 24px); }
+
+/* Envelope */
+.envelope3d{
+  width:var(--envW); height:var(--envH);
+  position:relative; transform-style:preserve-3d;
+  background:transparent; border:none; cursor:pointer;
+  filter: drop-shadow(0 20px 40px rgba(0,0,0,.45));
+  transition: transform calc(.2s * var(--speed)) ease;
+  touch-action: manipulation; will-change: transform;
+}
+.envelope3d:active{ transform: translateY(1px) }
+.env, .env-ribbon, .letter-slot, .env-ornaments, .bow { pointer-events:none; }
+.env{ position:absolute; inset:0; border-radius:12px; }
+.env-back{ background: linear-gradient(#0b2744,#061a2b); border:2px solid var(--gold); transform: translateZ(-4px); }
+.env-front{ background: linear-gradient(to bottom,#154a74,#0f3d63 60%,#0b2f4e 100%); border:2px solid var(--gold); clip-path: polygon(0 35%,100% 35%,100% 100%,0 100%); box-shadow: inset 0 -10px 20px rgba(0,0,0,.32), inset 0 1px 0 rgba(255,255,255,.08); transform: translateZ(2px); }
+.env-flap{ clip-path: polygon(0 0,100% 0,50% 62%); background: linear-gradient(#0f3d63,#0b2f4e); border:2px solid var(--gold); transform-origin: top center; transform: translateZ(6px); border-radius: 12px 12px 8px 8px/ 12px 12px 20px 20px; box-shadow: 0 8px 16px rgba(0,0,0,.32); }
+.env-ribbon{ position:absolute; left:0; right:0; top: calc(35% - 8px); height:16px; background: linear-gradient(90deg, rgba(212,175,55,.85), rgba(255,255,255,.15) 30%, rgba(212,175,55,.85) 70%, rgba(255,255,255,.15)); mix-blend-mode: plus-lighter; border-top:1px solid rgba(255,255,255,.25); border-bottom:1px solid rgba(0,0,0,.4); transform: translateZ(6px); border-radius: 14px/12px; }
+.env-ornaments{ position:absolute; inset:8px; border-radius:10px; border:1px solid rgba(212,175,55,.6); transform: translateZ(7px); }
+.env-ornaments::before, .env-ornaments::after{ content:""; position:absolute; width:26px; height:26px; border:2px solid rgba(212,175,55,.7); filter: drop-shadow(0 0 4px rgba(212,175,55,.25)); }
+.env-ornaments::before{ border-right:none; border-bottom:none; left:10px; top:10px; border-radius:8px 0 0 0; }
+.env-ornaments::after{ border-left:none; border-top:none; right:10px; bottom:10px; border-radius:0 0 8px 0; }
+
+/* Bow silk */
+.bow{ position:absolute; left:50%; top: calc(35% - 2px); transform: translate(-50%,-50%) translateZ(9px); width: 140px; height: 56px; }
+.bow .knot{ position:absolute; left:50%; top:50%; transform: translate(-50%,-50%); width:22px; height:22px; border-radius:6px; background: radial-gradient(circle at 30% 30%, #e9c36a, #c59a3a 70%, #9a7a2d); box-shadow: inset 0 2px 3px rgba(255,255,255,.3), 0 3px 6px rgba(0,0,0,.35); }
+.bow .loop{ position:absolute; top:50%; width:56px; height:40px; border-radius:50% 50% 40% 40%; background: radial-gradient(circle at 40% 30%, #f0d98a, #cfa242 70%, #9a7a2d); box-shadow: inset 0 2px 4px rgba(255,255,255,.3), 0 4px 10px rgba(0,0,0,.35); }
+.bow .loop.left{ left: 50%; transform: translate(-100%,-50%) rotate(-8deg); transform-origin: right center; }
+.bow .loop.right{ left: 50%; transform: translate(0,-50%) rotate(8deg); transform-origin: left center; }
+.bow .tail{ position:absolute; top: calc(50% + 14px); width:18px; height:38px; background: linear-gradient(#e9c36a,#bb8d2f); clip-path: polygon(0 0, 100% 0, 100% 80%, 50% 100%, 0 80%); box-shadow: 0 3px 6px rgba(0,0,0,.3); }
+.bow .tail.left{ left: calc(50% - 18px); transform: translate(-100%,-50%) rotate(-6deg); }
+.bow .tail.right{ left: calc(50% + 18px); transform: translate(0,-50%) rotate(6deg); }
+.bow.untie .loop.left{ animation: loopLeft .6s ease forwards; } .bow.untie .loop.right{ animation: loopRight .6s ease forwards; }
+.bow.untie .tail.left{ animation: tailLeft .6s ease forwards; } .bow.untie .tail.right{ animation: tailRight .6s ease forwards; }
+.bow.untie .knot{ animation: knotPop .5s ease forwards .1s; }
+@keyframes loopLeft{ to{ transform: translate(-160%,-70%) rotate(-28deg); opacity:.0 } }
+@keyframes loopRight{ to{ transform: translate(60%,-70%) rotate(28deg); opacity:.0 } }
+@keyframes tailLeft{ to{ transform: translate(-160%,-40%) rotate(-28deg); opacity:.0 } }
+@keyframes tailRight{ to{ transform: translate(60%,-40%) rotate(28deg); opacity:.0 } }
+@keyframes knotPop{ 40%{ transform: translate(-50%,-50%) scale(1.15) } 100%{ transform: translate(-50%,-50%) scale(.7); opacity:0 } }
+
+/* Portrait letter */
+.letter.portrait{
+  width: min(86vw, 480px);
+  height: min(90vh, 760px);
+  position:absolute; left:50%; top: calc(35% + 10px);
+  transform: translate(-50%,0) translateZ(0);
+  opacity:0;
+}
+.paper{
+  width:100%; height:100%; background: var(--paper); border: 1px solid var(--gold);
+  box-shadow:0 10px 24px rgba(0,0,0,.35); border-radius: 10px; overflow: hidden; position: relative;
+}
+.paper::before{
+  content:""; position:absolute; inset:0;
+  background: repeating-linear-gradient( to bottom, rgba(0,0,0,.04) 0, rgba(0,0,0,.04) 1px, transparent 1px, transparent 28px);
+  opacity:.28; pointer-events:none;
+}
+.paper-inner{
+  position:absolute; inset:0; overflow:auto;
+  padding: calc(24px + var(--sealH) + 18px) 24px 80px 24px; /* ↑↑ مساحة فوق الختم */
+  scroll-behavior: smooth;
+}
+.wax-seal.header::after{
+  content:"";
+  position:absolute; inset:-6px;
+  border-radius:50%;
+  border:1px solid rgba(212,175,55,.55);
+  box-shadow: 0 0 12px rgba(212,175,55,.25);
+}
+
+
+.message.handwrite{
+  font-size: clamp(18px, 3.9vw, 22px);
+  line-height: 2.2;
+  direction: rtl; unicode-bidi: plaintext;
+  color: #1d1408;
+  font-family: "Lateef","Aref Ruqaa","Noto Naskh Arabic","Great Vibes","Cormorant Garamond",serif;
+  white-space: pre-wrap;
+}
+.message.handwrite *{ font-family: inherit; }
+
+.caret{ position:absolute; width:2px; height:1.2em; background:#5b4020; opacity:0; animation: blink 1s step-end infinite; }
+@keyframes blink{ 50%{ opacity:0 } 0%,100%{ opacity:1 } }
+
+/* Wax seal — header */
+.wax-seal.header{
+  position:absolute;
+  width: var(--sealH); height: var(--sealH);
+  border-radius:50%;
+  left:50%; top: 24px; transform: translate(-50%,0);
+  background: radial-gradient(circle at 35% 35%, #0f3d63, #0b2f4e 60%, #08233a 100%);
+  box-shadow: inset 0 4px 8px rgba(255,255,255,.2), 0 10px 22px rgba(0,0,0,.45);
+  border: 2px solid rgba(0,0,0,.35);
+  display:grid; place-items:center;
+  z-index: 5;              /* ← يضمن أنه فوق الورقة/النص */
+  pointer-events: none;    /* ← ما ياخذ كلك */
+}
+.seal-svg{ width: 78%; height: 78%; }
+
+
+/* Bottom signature block */
+.signature-block{
+  position: absolute;
+  bottom: 24px;
+  right: 28px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .8s ease, transform .8s ease;
+}
+body.sig-left .signature-block{ right:auto; left:28px; }
+.signature-block.show{ opacity:1; transform: translateY(0); }
+
+.signature-name{
+  font-family: "Great Vibes","Aref Ruqaa",cursive;
+  font-size: clamp(22px, 4.8vw, 30px);
+  color: #3b2b14;
+  margin-bottom: 8px;
+}
+
+.wax-seal.small{
+  width: 52px; height: 52px; border-radius:50%;
+  background: radial-gradient(circle at 35% 35%, #0f3d63, #0b2f4e 70%);
+  border: 2px solid rgba(0,0,0,.35);
+  box-shadow: inset 0 3px 6px rgba(255,255,255,.25), 0 4px 10px rgba(0,0,0,.3);
+  margin: auto;
+}
+
+.particles{ position:fixed; inset:0; pointer-events:none; z-index:5; }
+.heart{ position:absolute; width:18px; height:18px; transform: rotate(-45deg); opacity:0; background: linear-gradient(135deg, #ff9aa2, #ffd3d6); filter: drop-shadow(0 3px 8px rgba(255, 150, 170, .45)); }
+.heart::before,.heart::after{ content:""; position:absolute; width:18px; height:18px; background:inherit; border-radius:50%; }
+.heart::before{ top:-9px; left:0; } .heart::after{ top:0; left:9px; }
+
+/* States */
+.stage.shake .envelope3d{ animation:shake calc(.35s * var(--speed)) }
+@keyframes shake{ 0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-4px)} }
+.envelope-open .env-flap{ transform: rotateX(180deg) translateZ(6px); transition: transform calc(1s * var(--speed)) ease }
+.envelope-open .letter{ opacity:1; transform: translate(-50%,-6px) }
+.envelope-retreat .envelope3d{ transform: translateZ(-120px) scale(.97); filter: blur(.4px) drop-shadow(0 10px 16px rgba(0,0,0,.28)); opacity:.9 }
+
+.letter-reveal .message{ opacity:1; transform:none; transition: opacity calc(.5s * var(--speed)) ease .1s, transform calc(.5s * var(--speed)) ease .1s }
+
+@media (max-width:420px){
+  :root{ --envW: 90vw; --speed: .65; }
+  .message.handwrite{ font-size: clamp(18px, 5vw, 22px); }
+}
